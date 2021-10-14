@@ -1,3 +1,5 @@
+import 'package:facebook_login/db_helper.dart';
+import 'package:facebook_login/expense_info.dart';
 import 'package:flutter/material.dart';
 
 class AddExpense extends StatefulWidget {
@@ -23,6 +25,10 @@ class _AddExpenseState extends State<AddExpense> {
               child: TextFormField(
                 controller: nameController,
                 decoration: InputDecoration(
+                  border: OutlineInputBorder(
+
+                  ),
+                    labelText: "Name Expense",
                     hintText: "Name Expense"
                 ),
                 validator: (value){
@@ -32,9 +38,12 @@ class _AddExpenseState extends State<AddExpense> {
                 },
               ),
             ),
+              SizedBox(height: 8,),
               TextFormField(
                   controller: amountController,
                   decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                      labelText: "Amount",
                       hintText: "Amount"
                   ),
                   validator: (value){
@@ -44,8 +53,15 @@ class _AddExpenseState extends State<AddExpense> {
                   }
               ),
               SizedBox(height: 20),
-              ElevatedButton(onPressed: (){
-                if(formkey.currentState!.validate()){}
+              ElevatedButton(onPressed: () {
+                if(formkey.currentState!.validate()){
+                  String name=nameController.text;
+                  double amount=double.parse(amountController.text);
+                  Expense userInfo=Expense(name:name,amount:amount );
+                  DbHelper.expenseList.add(userInfo);
+                 nameController.text="";
+                 amountController.text="";
+                }
               }, child: Text("Submit"))
             ],
           ),

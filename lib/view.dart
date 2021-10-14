@@ -1,3 +1,6 @@
+import 'package:facebook_login/db_helper.dart';
+import 'package:facebook_login/expense_info.dart';
+import 'package:facebook_login/userinfo.dart';
 import 'package:flutter/material.dart';
 
 class View extends StatefulWidget {
@@ -8,10 +11,43 @@ class View extends StatefulWidget {
 }
 
 class _ViewState extends State<View> {
+  late List<Expense> expenseList;
+  void initState(){
+    expenseList=DbHelper.expenseList??[];
+    super.initState();
+  }
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Welcome"),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Expanded(
+          child: ListView.builder(
+              itemCount: expenseList.length,
+              shrinkWrap: true,
+              itemBuilder: (context,index){
+                Expense expense=expenseList[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width:2,color: Colors.black),
+                    color: Colors.green[200]
+                  ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text("name: ${expense.name}"),
+                      SizedBox(height: 8,),
+                      Text("amount: ${expense.amount}"),
+                    ],
+                  ),
+                );
+              }
+          )
+
+        ),
+      ),
     );
   }
 }
