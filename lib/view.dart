@@ -13,7 +13,7 @@ class View extends StatefulWidget {
 class _ViewState extends State<View> {
   late List<Expense> expenseList;
   void initState(){
-    expenseList=DbHelper.expenseList??[];
+    expenseList=DbHelper.expenseList ?? [];
     super.initState();
   }
   @override
@@ -29,25 +29,41 @@ class _ViewState extends State<View> {
               shrinkWrap: true,
               itemBuilder: (context,index){
                 Expense expense=expenseList[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(width:2,color: Colors.black),
-                    color: Colors.green[200]
+                return InkWell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width:2,color: Colors.black),
+                      color: Colors.green[200]
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text("name: ${expense.name}"),
+                        SizedBox(height: 8,),
+                        Text("amount: ${expense.amount}"),
+                        SizedBox(height: 8,),
+                        Text("amount: ${expense.date}"),
+                      ],
+                    ),
                   ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Text("name: ${expense.name}"),
-                      SizedBox(height: 8,),
-                      Text("amount: ${expense.amount}"),
-                    ],
-                  ),
+                  onTap: (){
+                    setState(() {
+                      expenseList.indexOf(expenseList[index]);
+                      expenseList.removeAt(index);
+                    });
+                  },
                 );
               }
           )
 
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        child: Icon(Icons.refresh),
+      ),
+
+
     );
   }
 }

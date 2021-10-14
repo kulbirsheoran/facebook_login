@@ -57,7 +57,8 @@ class _AddExpenseState extends State<AddExpense> {
                 if(formkey.currentState!.validate()){
                   String name=nameController.text;
                   double amount=double.parse(amountController.text);
-                  Expense userInfo=Expense(name:name,amount:amount );
+                  String date=DateTime.now().toString();
+                  Expense userInfo=Expense(name:name,amount:amount,date: date);
                   DbHelper.expenseList.add(userInfo);
                  nameController.text="";
                  amountController.text="";

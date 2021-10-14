@@ -11,7 +11,6 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
-
 class _SignUpState extends State<SignUp> {
   TextEditingController nameController=TextEditingController();
   TextEditingController mobileNoController=TextEditingController();

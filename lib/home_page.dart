@@ -2,6 +2,7 @@ import 'package:facebook_login/db_helper.dart';
 import 'package:facebook_login/signIn.dart';
 import 'package:facebook_login/signup.dart';
 import 'package:facebook_login/userinfo.dart';
+import 'package:facebook_login/view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 class _HomePageState extends State<HomePage> {
+  bool isPassword=true;
   TextEditingController nameController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   final formkey=GlobalKey<FormState>();
@@ -39,11 +41,19 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 8,),
               TextFormField(
+                obscureText: isPassword,
                 controller: passwordController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Password",
-                  hintText: "Password"
+                  hintText: "Password",
+                    suffixIcon: InkWell(child: Icon(Icons.remove_red_eye,color: Colors.green,),
+                    onTap: (){
+                      setState(() {
+                        isPassword = !isPassword;
+                      });
+                    },),
+
                 ),
                   validator: (value){
                     if(value==null||value.isEmpty){
