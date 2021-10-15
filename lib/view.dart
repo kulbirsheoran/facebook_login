@@ -47,7 +47,7 @@ class _ViewState extends State<View> {
                     ),
                   ),
                   onTap: (){
-                    setState(() {
+                    setState(() {Icon(Icons.delete);
                       expenseList.indexOf(expenseList[index]);
                       expenseList.removeAt(index);
                     });

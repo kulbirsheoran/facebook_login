@@ -2,6 +2,7 @@ import 'package:facebook_login/db_helper.dart';
 import 'package:facebook_login/userinfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_page.dart';
 
@@ -90,20 +91,8 @@ class _SignUpState extends State<SignUp> {
                 height: 20,
               ),
               ElevatedButton(
-                  onPressed: (){
-                    if(formkey.currentState!.validate()){
-                      String name=nameController.text;
-                      String mobile=mobileNoController.text;
-                      String password=passwordController.text;
-                      String confirmPassword=confirmPasswordController.text;
-                      UserInfo userinfo=UserInfo(
-                          name: name,mobile: mobile,password: password,confirmPassword: confirmPassword
-                      );
-                      DbHelper.userInfo=userinfo;
-                      Navigator.push(
-                          context, MaterialPageRoute(
-                          builder: (context)=>HomePage()));
-                    }
+                  onPressed: ()async{
+                     createAccount(context);
                   },
                   child: Text("Submit"))
             ],
@@ -111,5 +100,23 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  Future<void> createAccount(BuildContext context) async {
+    if(formkey.currentState!.validate()){
+      String name=nameController.text;
+      String mobile=mobileNoController.text;
+      String password=passwordController.text;
+      String confirmPassword=confirmPasswordController.text;
+
+      SharedPreferences sp =await SharedPreferences.getInstance();
+      sp.setString("name", name);
+      sp.setString("password", password);
+      sp.setString("mobile", mobile);
+
+      Navigator.push(
+          context, MaterialPageRoute(
+          builder: (context)=>HomePage()));
+    }
   }
 }
